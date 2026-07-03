@@ -1,12 +1,13 @@
 import { useState } from "react";
-import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
 
-    const navigate = useNavigate();
     const { login } = useAuth();
+
+    const navigate = useNavigate();
+    
 
     const [form, setForm] = useState({
         email: "",
@@ -20,23 +21,21 @@ export default function Login() {
         });
     };
 
+
     const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
+    try {
 
-        try {
+        await login(form.email, form.password);
 
-            const res = await api.post("/auth/login", form);
+        navigate("/dashboard");
 
-            login(res.data);
+    } catch (err) {
 
-            navigate("/dashboard");
-
-        } catch (err) {
-
-            alert(err.response?.data?.message || "Login Failed");
-        }
-    };
+        alert(err.response?.data?.message || "Login Failed");
+    }
+};
 
     return (
 
