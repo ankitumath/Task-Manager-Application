@@ -1,12 +1,15 @@
+import { useAuth } from "./AuthContext";
+
 import { createContext, useContext, useEffect, useState } from "react";
 import * as taskService from "../services/taskService";
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
-
+const [editingTask, setEditingTask] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   const loadTasks = async () => {
     try {
@@ -20,8 +23,10 @@ export const TaskProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loadTasks();
-  }, []);
+    if (user) {
+      loadTasks();
+    }
+  }, [user]);
 
   const addTask = async (task) => {
     const newTask = await taskService.createTask(task);
@@ -54,7 +59,9 @@ export const TaskProvider = ({ children }) => {
         addTask,
         removeTask,
         editTask,
-        loadTasks
+        loadTasks,
+          editingTask,
+    setEditingTask,
       }}
     >
       {children}
