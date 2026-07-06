@@ -2,6 +2,10 @@
 
 A modern and responsive **Task Management Web Application** built using the **MERN Stack (MongoDB, Express.js, React.js, Node.js)**. This application helps users organize and manage their daily tasks with authentication, search, filters, sorting, task priorities, and due dates.
 
+Backend : https://task-manager-application-6o4x.onrender.com
+
+Frontend : https://task-manager-application-plum-ten.vercel.app/
+
 ### Login Page
 
 ### Register Page
