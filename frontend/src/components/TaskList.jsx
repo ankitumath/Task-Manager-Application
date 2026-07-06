@@ -2,11 +2,14 @@ import { useTasks } from "../context/TaskContext";
 import TaskCard from "./TaskCard";
 import { ClipLoader } from "react-spinners";
 
+
 function TaskList({
-  search = "",
-  statusFilter = "All",
-  priorityFilter = "All",
+  search,
+  statusFilter,
+  priorityFilter,
+  sortBy
 }) {
+
 
   const { tasks, loading } = useTasks();
 
@@ -51,6 +54,34 @@ function TaskList({
       </div>
     );
   }
+
+filteredTasks.sort((a, b) => {
+
+    if (sortBy === "Newest")
+        return new Date(b.createdAt) - new Date(a.createdAt);
+
+    if (sortBy === "Oldest")
+        return new Date(a.createdAt) - new Date(b.createdAt);
+
+    if (sortBy === "Priority") {
+
+        const order = {
+            High: 3,
+            Medium: 2,
+            Low: 1,
+        };
+
+        return order[b.priority] - order[a.priority];
+    }
+
+    if (sortBy === "Due Date") {
+
+        return new Date(a.dueDate) - new Date(b.dueDate);
+
+    }
+
+    return 0;
+});
 
   return (
     <div className="space-y-5">

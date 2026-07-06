@@ -30,6 +30,18 @@ function TaskCard({ task }) {
     Completed: "bg-green-600",
   };
 
+  const toggleStatus = async () => {
+  const newStatus =
+    task.status === "Pending"
+      ? "Completed"
+      : "Pending";
+
+  await editTask(task._id, {
+    ...task,
+    status: newStatus,
+  });
+};
+
   return (
     <div className="
 bg-white
@@ -59,13 +71,16 @@ border
 
       <div className="flex justify-between items-center mt-5">
 
-        <span
-          className={`text-white px-3 py-1 rounded-full text-sm ${
-            statusColor[task.status] || "bg-gray-500"
-          }`}
-        >
-          {task.status}
-        </span>
+        <button
+  onClick={toggleStatus}
+  className={`text-white px-3 py-1 rounded-full text-sm ${
+    task.status === "Completed"
+      ? "bg-green-600"
+      : "bg-orange-500"
+  }`}
+>
+  {task.status}
+</button>
 
         <span
           className={`text-white px-3 py-1 rounded-full text-sm ${

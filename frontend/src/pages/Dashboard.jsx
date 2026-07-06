@@ -4,11 +4,24 @@ import Stats from "../components/Stats";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 import SearchBar from "../components/SearchBar";
+import FilterBar from "../components/FilterBar";
+import SortBar from "../components/SortBar";
 
 function Dashboard() {
-    const [search, setSearch] = useState("");
+const [search, setSearch] = useState("");
 const [statusFilter, setStatusFilter] = useState("All");
 const [priorityFilter, setPriorityFilter] = useState("All");
+const [sortBy, setSortBy] = useState("Newest");
+
+<FilterBar
+    statusFilter={statusFilter}
+    setStatusFilter={setStatusFilter}
+    priorityFilter={priorityFilter}
+    setPriorityFilter={setPriorityFilter}
+/>
+
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100">
       <Navbar />
@@ -19,6 +32,7 @@ const [priorityFilter, setPriorityFilter] = useState("All");
 
           <div className="mt-6">
     <SearchBar onSearch={setSearch} />
+
   </div>
 
   <div className="flex flex-col md:flex-row gap-4 mt-4">
@@ -53,10 +67,11 @@ const [priorityFilter, setPriorityFilter] = useState("All");
           </div>
 
           <div className="lg:col-span-2">
-            <TaskList
-  search={search}
-  statusFilter={statusFilter}
-  priorityFilter={priorityFilter}
+         <TaskList
+    search={search}
+    statusFilter={statusFilter}
+    priorityFilter={priorityFilter}
+    sortBy={sortBy}
 />
           </div>
 
